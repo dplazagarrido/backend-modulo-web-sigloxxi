@@ -52,7 +52,7 @@ public class MesaController {
 	
 	/* Actualizar una mesa */
 	@PutMapping("/mesa/{id}")
-	public ResponseEntity<Mesa> updateCliente(@PathVariable(value="id") Long mesid, @Valid @RequestBody Mesa MesDetails){
+	public ResponseEntity<Mesa> updateMesa(@PathVariable(value="id") Long mesid, @Valid @RequestBody Mesa MesDetails){
 		
 		Mesa mes=mesaDAO.findOne(mesid);
 		if(mes==null) {
@@ -87,5 +87,70 @@ public class MesaController {
 
 		
 	}
+	
+	/* Cambiar estado de mesa disponible */
+	@PostMapping("/mesa/d/{id}")
+	public ResponseEntity<Mesa> updateEstadoMesaDisponible(@PathVariable(value="id") Long mesid){
+		
+		Mesa mes=mesaDAO.findOne(mesid);
+		if(mes==null) {
+			return ResponseEntity.notFound().build();
+		}
+				
+		mes.setEstado('D');
+		
+		Mesa updateMesa=mesaDAO.save(mes);
+		
+		
+		return ResponseEntity.ok().body(updateMesa);
+		
+	}
+	
+	/* Cambiar estado de mesa Ocupada */
+	@PostMapping("/mesa/o/{id}")
+	public ResponseEntity<Mesa> updateEstadoMesaOcupada(@PathVariable(value="id") Long mesid){
+		
+		Mesa mes=mesaDAO.findOne(mesid);
+		if(mes==null) {
+			return ResponseEntity.notFound().build();
+		}
+				
+		mes.setNumero(mes.getNumero());
+		mes.setEstado('O');
+		mes.setCantidad_personas(mes.getCantidad_personas());
+		
+		Mesa updateMesa=mesaDAO.save(mes);
+		
+		
+		return ResponseEntity.ok().body(updateMesa);
+		
+	}
+	
+	/* Cambiar estado de mesa en Mantencion */
+	@PostMapping("/mesa/m/{id}")
+	public ResponseEntity<Mesa> updateEstadoMesaMantencion(@PathVariable(value="id") Long mesid){
+		
+		Mesa mes=mesaDAO.findOne(mesid);
+		if(mes==null) {
+			return ResponseEntity.notFound().build();
+		}
+				
+		mes.setNumero(mes.getNumero());
+		mes.setEstado('M');
+		mes.setCantidad_personas(mes.getCantidad_personas());
+		
+		Mesa updateMesa=mesaDAO.save(mes);
+		
+		
+		return ResponseEntity.ok().body(updateMesa);
+		
+	}
+	
+	
+	
 
 }
+
+	
+
+
