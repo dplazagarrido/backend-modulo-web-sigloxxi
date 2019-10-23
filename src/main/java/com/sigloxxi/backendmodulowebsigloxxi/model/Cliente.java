@@ -5,27 +5,29 @@ import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.annotations.GeneratorType;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-@Table(name="Cliente")
-@EntityListeners(AuditingEntityListener.class)
+@Table(name="cliente")
+
 public class Cliente {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id_cliente;
 	
-	@NotBlank
+
 	private String nombre;
 	
-	@NotBlank
 	private String ap_paterno;
 
-	@NotBlank
+	
 	private String ap_materno;
 
 	public long getId_cliente() {

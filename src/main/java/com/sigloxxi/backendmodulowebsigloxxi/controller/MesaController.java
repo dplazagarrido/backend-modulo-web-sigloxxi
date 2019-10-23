@@ -59,9 +59,9 @@ public class MesaController {
 			return ResponseEntity.notFound().build();
 		}
 				
-		mes.setNumero(mes.getNumero());
-		mes.setEstado(mes.getEstado());
-		mes.setCantidad_personas(mes.getCantidad_personas());
+		mes.setNumero(MesDetails.getNumero());
+		mes.setEstado(MesDetails.getEstado());
+		mes.setCantidad_personas(MesDetails.getCantidad_personas());
 		
 		Mesa updateMesa=mesaDAO.save(mes);
 		
@@ -97,7 +97,7 @@ public class MesaController {
 			return ResponseEntity.notFound().build();
 		}
 				
-		mes.setEstado('D');
+		mes.setEstado('L');
 		
 		Mesa updateMesa=mesaDAO.save(mes);
 		
@@ -146,10 +146,34 @@ public class MesaController {
 		
 	}
 	
+	/* Encontrar mesa por id  (CAMBIA EL ESTADO DE TODAS LAS MESAS QUE CUMPLEN ESE REQUISITO)*/ 
 	
-	
+	@GetMapping("/mesa/asignar/{cantidad}")
+	public ResponseEntity<Mesa> getMesaDisponible(@PathVariable(value="cantidad") Long cantidad){
+		
+		Mesa asignarMesa = null;
+		
+		
+		
+		for (Mesa mesa : mesaDAO.findAll()) {
+			
+			if(mesa.getCantidad_personas() >= cantidad && mesa.getEstado() =='L')
+			{
+				mesa = mesaDAO.findOne(mesa.getId_mesa());
+				mesa.setEstado('O');
+				asignarMesa = mesaDAO.save(mesa);
+				
 
+			}
+			break;
+		}
+			
+		
+		return ResponseEntity.ok().body(asignarMesa);
+
+	}
 }
+
 
 	
 

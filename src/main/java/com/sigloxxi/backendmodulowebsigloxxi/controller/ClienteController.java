@@ -59,9 +59,9 @@ public class ClienteController {
 			return ResponseEntity.notFound().build();
 		}
 		
-		cli.setNombre(cli.getNombre());
-		cli.setAp_paterno(cli.getAp_paterno());
-		cli.setAp_materno(cli.getAp_materno());
+		cli.setNombre(CliDetails.getNombre());
+		cli.setAp_paterno(CliDetails.getAp_paterno());
+		cli.setAp_materno(CliDetails.getAp_materno());
 		
 		Cliente updateCliente=clienteDAO.save(cli);
 		
