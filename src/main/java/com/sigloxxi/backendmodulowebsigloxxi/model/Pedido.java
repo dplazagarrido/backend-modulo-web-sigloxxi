@@ -1,6 +1,6 @@
 package com.sigloxxi.backendmodulowebsigloxxi.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
@@ -22,6 +22,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 public class Pedido {
 
+	@Id
+	private long id_pedido;
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	private Date hora_pedido;
@@ -29,6 +32,15 @@ public class Pedido {
 	private long mesa_id_mesa;
 	
 	private long cliente_id_cliente;
+
+	
+	public long getId_pedido() {
+		return id_pedido;
+	}
+
+	public void setId_pedido(long id_pedido) {
+		this.id_pedido = id_pedido;
+	}
 
 	public Date getHora_pedido() {
 		return hora_pedido;

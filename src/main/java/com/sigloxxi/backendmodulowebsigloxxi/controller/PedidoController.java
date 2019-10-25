@@ -31,7 +31,7 @@ public class PedidoController {
 		return pedidoDAO.save(ped);
 	}
 	
-	/* Obtener todos los clientes */
+	/* Obtener todos los pedidos */
 	@GetMapping("/pedido")
 	public List<Pedido> getAllPedido(){
 		return pedidoDAO.findAll();
@@ -51,7 +51,7 @@ public class PedidoController {
 	}
 	
 	
-	/* Actualizar un cliente */
+	/* Actualizar un pedido */
 	@PutMapping("/pedido/{id}")
 	public ResponseEntity<Pedido> updatePedido(@PathVariable(value="id") Long pedid, @Valid @RequestBody Pedido PedDetails){
 		
@@ -71,7 +71,7 @@ public class PedidoController {
 		
 	}
 	
-	/* Eliminar cliente */
+	/* Eliminar pedido */
 	@DeleteMapping("/pedido/{id}")
 	public ResponseEntity<Pedido> deletePedido(@PathVariable(value="id") Long pedid){
 		
