@@ -6,22 +6,23 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
-@Table(name="tipo_plato")
-public class TipoPlato {
+@Table(name="metodo_pago")
+public class MetodoPago {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private long id_tipo_plato;
+	private long id_metodo_pago;
 	
 	private String descripcion;
 
-	public long getId_tipo_plato() {
-		return id_tipo_plato;
+	public long getId_metodo_pago() {
+		return id_metodo_pago;
 	}
 
-	public void setId_tipo_plato(long id_tipo_plato) {
-		this.id_tipo_plato = id_tipo_plato;
+	public void setId_metodo_pago(long id_metodo_pago) {
+		this.id_metodo_pago = id_metodo_pago;
 	}
 
 	public String getDescripcion() {
@@ -33,6 +34,5 @@ public class TipoPlato {
 	}
 	
 	
-	
-	
+
 }

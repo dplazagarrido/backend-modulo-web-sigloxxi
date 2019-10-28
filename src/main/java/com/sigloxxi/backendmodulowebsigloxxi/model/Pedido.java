@@ -23,6 +23,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Pedido {
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+
 	private long id_pedido;
 	
 	@Temporal(TemporalType.TIMESTAMP)

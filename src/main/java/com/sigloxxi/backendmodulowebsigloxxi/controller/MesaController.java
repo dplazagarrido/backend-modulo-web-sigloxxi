@@ -88,8 +88,8 @@ public class MesaController {
 		
 	}
 	
-	/* Cambiar estado de mesa disponible */
-	@PostMapping("/mesa/d/{id}")
+	/* Cambiar estado de mesa a disponible */
+	@PostMapping("/mesa/l/{id}")
 	public ResponseEntity<Mesa> updateEstadoMesaDisponible(@PathVariable(value="id") Long mesid){
 		
 		Mesa mes=mesaDAO.findOne(mesid);
@@ -106,7 +106,7 @@ public class MesaController {
 		
 	}
 	
-	/* Cambiar estado de mesa Ocupada */
+	/* Cambiar estado de mesa a Ocupada */
 	@PostMapping("/mesa/o/{id}")
 	public ResponseEntity<Mesa> updateEstadoMesaOcupada(@PathVariable(value="id") Long mesid){
 		
@@ -126,7 +126,8 @@ public class MesaController {
 		
 	}
 	
-	/* Cambiar estado de mesa en Mantencion */
+	/* Cambiar estado de mesa a en Mantencion */
+	
 	@PostMapping("/mesa/m/{id}")
 	public ResponseEntity<Mesa> updateEstadoMesaMantencion(@PathVariable(value="id") Long mesid){
 		
@@ -146,7 +147,7 @@ public class MesaController {
 		
 	}
 	
-	/* Encontrar mesa por id  (CAMBIA EL ESTADO DE TODAS LAS MESAS QUE CUMPLEN ESE REQUISITO)*/ 
+	/* Encontrar mesa por id  (CAMBIA EL ESTADO DE TODAS LAS MESAS QUE CUMPLEN ESE REQUISITO) SACAR EL BREAK*/ 
 	
 	@GetMapping("/mesa/asignar/{cantidad}")
 	public ResponseEntity<Mesa> getMesaDisponible(@PathVariable(value="cantidad") Long cantidad){
