@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -18,7 +19,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Mesa {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "MESA_SEQ", sequenceName = "mesa_id_mesa_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "MESA_SEQ")
 	private long id_mesa;
 	
 	

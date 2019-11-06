@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -19,7 +20,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Cliente {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "CLIENTE_SEQ", sequenceName = "cliente_id_cliente_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "CLIENTE_SEQ")
 	private long id_cliente;
 	
 
@@ -29,6 +31,26 @@ public class Cliente {
 
 	
 	private String ap_materno;
+	
+	private String correo;
+	
+	private long cantidad_visitas;
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public long getCantidad_visitas() {
+		return cantidad_visitas;
+	}
+
+	public void setCantidad_visitas(long cantidad_visitas) {
+		this.cantidad_visitas = cantidad_visitas;
+	}
 
 	public long getId_cliente() {
 		return id_cliente;

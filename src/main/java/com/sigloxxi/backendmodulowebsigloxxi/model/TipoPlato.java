@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -11,7 +12,8 @@ import javax.persistence.Table;
 public class TipoPlato {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "TIPO_SEQ", sequenceName = "tipo_plato_id_tipo_plato_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "TIPO_SEQ")
 	private long id_tipo_plato;
 	
 	private String descripcion;

@@ -4,19 +4,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="plato")
 public class Plato {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "PLATO_SEQ", sequenceName = "plato_id_plato_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "PLATO_SEQ")
 	private long id_plato;
 	
 	private String nombre;
 	
-	private long tiempo_preparación;
+	private long tiempo_preparacion;
 	
 	private long costo;
 	
@@ -42,12 +44,12 @@ public class Plato {
 		this.nombre = nombre;
 	}
 
-	public long getTiempo_preparación() {
-		return tiempo_preparación;
+	public long getTiempo_preparacion() {
+		return tiempo_preparacion;
 	}
 
-	public void setTiempo_preparación(long tiempo_preparación) {
-		this.tiempo_preparación = tiempo_preparación;
+	public void setTiempo_preparacion(long tiempo_preparación) {
+		this.tiempo_preparacion = tiempo_preparación;
 	}
 
 	public long getCosto() {

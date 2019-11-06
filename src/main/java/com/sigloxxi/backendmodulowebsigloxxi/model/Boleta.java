@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,7 +19,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 public class Boleta {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@SequenceGenerator(name= "BOLETA_SEQ", sequenceName = "boleta_id_boleta_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "BOLETA_SEQ")
 	private long id_boleta;
 	
 	@Temporal(TemporalType.DATE)

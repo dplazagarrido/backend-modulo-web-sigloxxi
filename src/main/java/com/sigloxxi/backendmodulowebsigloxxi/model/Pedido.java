@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,8 +24,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class Pedido {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-
+	@SequenceGenerator(name= "PEDIDO_SEQ", sequenceName = "pedido_id_pedido_seq")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "PEDIDO_SEQ")
 	private long id_pedido;
 	
 	@Temporal(TemporalType.TIMESTAMP)
