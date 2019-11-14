@@ -3,6 +3,9 @@ package com.sigloxxi.backendmodulowebsigloxxi.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,140 +57,20 @@ public class PlatoController {
 		
 	}
 	
-	/* Mostrar los patos de entrada*/
-	@GetMapping("/plato/entrada")
-	public ResponseEntity<ArrayList<Plato>> getPlatoEntradas(){
-		ArrayList<Plato> platos = new ArrayList<Plato>();
-		for (Plato plato : platoDAO.findAll()) {
-			if(plato.getTipo_plato_id_tipo_plato() == 20)
-			{
-				platos.add(plato);
-			}
-						
-		}
-		return ResponseEntity.ok().body(platos);
-				
+	
+	/* Mostrar los platos segun categorias*/
+	@PersistenceUnit
+	EntityManagerFactory emf;
+	@GetMapping("/plato/categoria/{categoria}")
+	public List getPlatosCategoria(@PathVariable(value="categoria") String categoria){
+        EntityManager em = emf.createEntityManager();
+        List arr_cust = em
+                .createQuery("select p from Plato p join TipoPlato tp on (p.tipo_plato_id_tipo_plato = tp.id_tipo_plato) where tp.descripcion = :categoria")
+                .setParameter("categoria", categoria)
+                .getResultList();
+        return arr_cust;
 	}
 	
-	/* Mostrar los patos de fondo*/
-	@GetMapping("/plato/fondo")
-	public ResponseEntity<ArrayList<Plato>> getPlatoFondo(){
-		ArrayList<Plato> platos = new ArrayList<Plato>();
-		for (Plato plato : platoDAO.findAll()) {
-			if(plato.getTipo_plato_id_tipo_plato() == 30)
-			{
-				platos.add(plato);
-			}
-						
-		}
-		return ResponseEntity.ok().body(platos);
-				
-	}
-	
-	/* Mostrar los agregados*/
-	@GetMapping("/plato/agregado")
-	public ResponseEntity<ArrayList<Plato>> getAgregados(){
-		ArrayList<Plato> platos = new ArrayList<Plato>();
-		for (Plato plato : platoDAO.findAll()) {
-			if(plato.getTipo_plato_id_tipo_plato() == 35)
-			{
-				platos.add(plato);
-			}
-						
-		}
-		return ResponseEntity.ok().body(platos);
-				
-	}
-	
-	/* Mostrar las Ensaladas*/
-	@GetMapping("/plato/ensalada")
-	public ResponseEntity<ArrayList<Plato>> getEnsaladas(){
-		ArrayList<Plato> platos = new ArrayList<Plato>();
-		for (Plato plato : platoDAO.findAll()) {
-			if(plato.getTipo_plato_id_tipo_plato() == 40)
-			{
-				platos.add(plato);
-			}
-						
-		}
-		return ResponseEntity.ok().body(platos);
-				
-	}
-	
-	/* Mostrar las Sopas*/
-	@GetMapping("/plato/sopa")
-	public ResponseEntity<ArrayList<Plato>> getSopas(){
-		ArrayList<Plato> platos = new ArrayList<Plato>();
-		for (Plato plato : platoDAO.findAll()) {
-			if(plato.getTipo_plato_id_tipo_plato() == 50)
-			{
-				platos.add(plato);
-			}
-						
-		}
-		return ResponseEntity.ok().body(platos);
-				
-	}
-	
-	/* Mostrar las cervezas*/
-	@GetMapping("/plato/cerveza")
-	public ResponseEntity<ArrayList<Plato>> getCervezas(){
-		ArrayList<Plato> platos = new ArrayList<Plato>();
-		for (Plato plato : platoDAO.findAll()) {
-			if(plato.getTipo_plato_id_tipo_plato() == 60)
-			{
-				platos.add(plato);
-			}
-						
-		}
-		return ResponseEntity.ok().body(platos);
-				
-	}
-	
-	/* Mostrar los bebestibles*/
-	@GetMapping("/plato/bebestible")
-	public ResponseEntity<ArrayList<Plato>> getBebestible(){
-		ArrayList<Plato> platos = new ArrayList<Plato>();
-		for (Plato plato : platoDAO.findAll()) {
-			if(plato.getTipo_plato_id_tipo_plato() == 70)
-			{
-				platos.add(plato);
-			}
-						
-		}
-		return ResponseEntity.ok().body(platos);
-				
-	}
-	
-	/* Mostrar los aperitivos*/
-	@GetMapping("/plato/aperitivo")
-	public ResponseEntity<ArrayList<Plato>> getAperitivos(){
-		ArrayList<Plato> platos = new ArrayList<Plato>();
-		for (Plato plato : platoDAO.findAll()) {
-			if(plato.getTipo_plato_id_tipo_plato() == 80)
-			{
-				platos.add(plato);
-			}
-						
-		}
-		return ResponseEntity.ok().body(platos);
-				
-	}
-	
-	/* Mostrar los postres*/
-	@GetMapping("/plato/postre")
-	public ResponseEntity<ArrayList<Plato>> getPostre(){
-		ArrayList<Plato> platos = new ArrayList<Plato>();
-		for (Plato plato : platoDAO.findAll()) {
-			if(plato.getTipo_plato_id_tipo_plato() == 90)
-			{
-				platos.add(plato);
-			}
-						
-		}
-		return ResponseEntity.ok().body(platos);
-				
-	}
 	
 	/* Actualizar un plato */
 	@PutMapping("/plato/{id}")

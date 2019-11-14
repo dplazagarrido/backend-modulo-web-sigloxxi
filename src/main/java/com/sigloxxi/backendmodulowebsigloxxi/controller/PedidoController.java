@@ -2,6 +2,9 @@ package com.sigloxxi.backendmodulowebsigloxxi.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,6 +91,19 @@ public class PedidoController {
 		return ResponseEntity.ok().build();
 
 		
+	}
+	
+	/* Mostrar Platos Pedidos*/
+	
+	@PersistenceUnit
+	EntityManagerFactory emf;
+	@GetMapping("/pedido/cocina")
+	public List getPedidos(){
+        EntityManager em = emf.createEntityManager();
+        List arr_cust = em
+                .createNativeQuery("SELECT p.nombre, dp.cantidad, m.id_mesa as MESA FROM plato p JOIN detalle_pedido dp ON (p.id_plato = dp.plato_id_plato) JOIN pedido pe ON (pe.id_pedido = dp.pedido_id_pedido) JOIN mesa m ON (m.id_mesa = pe.mesa_id_mesa)")
+                .getResultList();
+        return arr_cust;
 	}
 
 

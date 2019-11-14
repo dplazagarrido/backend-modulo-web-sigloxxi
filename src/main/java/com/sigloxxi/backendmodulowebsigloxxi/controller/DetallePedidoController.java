@@ -2,6 +2,9 @@ package com.sigloxxi.backendmodulowebsigloxxi.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -89,6 +92,21 @@ public class DetallePedidoController {
 		return ResponseEntity.ok().build();
 
 		
+	}
+	
+	/*Ver detalles del pedido con los nombres de los platos */
+	@PersistenceUnit
+	EntityManagerFactory emf;
+	
+	@GetMapping("detallePedido/detalle/{id}")
+	public List actionJoinTable(@PathVariable(value="id") Long detid) {
+        EntityManager em = emf.createEntityManager();
+        List arr_cust = em
+                .createQuery("select dp.valor , dp.cantidad , p.nombre from DetallePedido dp join Plato p on p.id_plato = dp.plato_id_plato where dp.pedido_id_pedido = :detid")
+                .setParameter("detid", detid)
+                .getResultList();
+        return arr_cust;
+
 	}
 	
 	

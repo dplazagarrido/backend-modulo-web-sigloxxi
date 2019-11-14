@@ -2,6 +2,9 @@ package com.sigloxxi.backendmodulowebsigloxxi.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,5 +93,20 @@ public class BoletaController {
 
 		
 	}
+	
+	/*Calcular el total del pedido*/
+	
+	@PersistenceUnit
+	EntityManagerFactory emf;
+	@GetMapping("/boleta/total/{id_pedido}")
+	public List getPlatosCategoria(@PathVariable(value="id_pedido") Long id_pedido){
+        EntityManager em = emf.createEntityManager();
+        List arr_cust = em
+                .createQuery("SELECT SUM(dp.valor * dp.cantidad) AS TOTAL FROM DetallePedido dp WHERE pedido_id_pedido = :id_pedido")
+                .setParameter("id_pedido", id_pedido)
+                .getResultList();
+        return arr_cust;
+	}
+
 
 }
