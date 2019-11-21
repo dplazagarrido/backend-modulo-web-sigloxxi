@@ -2,6 +2,9 @@ package com.sigloxxi.backendmodulowebsigloxxi.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +53,19 @@ public class ClienteController {
 		}
 		return ResponseEntity.ok().body(cli);
 		
+	}
+	
+	/* Encontrar un cliente por correo*/
+	@PersistenceUnit
+	EntityManagerFactory emf;
+	@GetMapping("/cliente/buscar/{correo}")
+	public List getClientePorCorreo(@PathVariable(value="correo") String correo){
+        EntityManager em = emf.createEntityManager();
+        List arr_cust = em
+                .createQuery("SELECT c FROM Cliente c WHERE correo = :correo")
+                .setParameter("correo", correo)
+                .getResultList();
+        return arr_cust;
 	}
 	
 	/* Actualizar un cliente */

@@ -55,6 +55,20 @@ public class PedidoController {
 		
 	}
 	
+	/* Encontrar pedido por id_cliente*/
+	
+	@PersistenceUnit
+	EntityManagerFactory emp;
+	@GetMapping("/pedido/buscar/{id_cliente}")
+	public List getPedidoPorIdCliente(@PathVariable(value="id_cliente") Long id_cliente){
+        EntityManager em = emp.createEntityManager();
+        List arr_cust = em
+                .createQuery("SELECT p FROM Pedido p WHERE cliente_id_cliente = :id_cliente")
+                .setParameter("id_cliente", id_cliente)
+                .getResultList();
+        return arr_cust;
+	}
+	
 	
 	/* Actualizar un pedido */
 	@PutMapping("/pedido/{id}")
@@ -101,7 +115,7 @@ public class PedidoController {
 	public List getPedidos(){
         EntityManager em = emf.createEntityManager();
         List arr_cust = em
-                .createNativeQuery("SELECT p.nombre, dp.cantidad, m.id_mesa as MESA FROM plato p JOIN detalle_pedido dp ON (p.id_plato = dp.plato_id_plato) JOIN pedido pe ON (pe.id_pedido = dp.pedido_id_pedido) JOIN mesa m ON (m.id_mesa = pe.mesa_id_mesa)")
+                .createNativeQuery("SELECT p.nombre, dp.cantidad, m.id_mesa as MESA FROM plato p JOIN detalle_pedido dp ON (p.id_plato = dp.plato_id_plato) JOIN pedido pe ON (pe.id_pedido = dp.pedido_id_pedido) JOIN mesa m ON (m.id_mesa = pe.mesa_id_mesa) ORDER BY p.tiempo_preparacion DESC")
                 .getResultList();
         return arr_cust;
 	}

@@ -2,6 +2,9 @@ package com.sigloxxi.backendmodulowebsigloxxi.controller;
 
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,9 +93,9 @@ public class MesaController {
 		
 	}
 	
-	/* Cambiar estado de mesa a disponible */
+	/* Cambiar estado de mesa a Libre */
 	@PostMapping("/mesa/l/{id}")
-	public ResponseEntity<Mesa> updateEstadoMesaDisponible(@PathVariable(value="id") Long mesid){
+	public ResponseEntity<Mesa> updateEstadoMesaLibre(@PathVariable(value="id") Long mesid){
 		
 		Mesa mes=mesaDAO.findOne(mesid);
 		if(mes==null) {
@@ -100,6 +103,24 @@ public class MesaController {
 		}
 				
 		mes.setEstado('L');
+		
+		Mesa updateMesa=mesaDAO.save(mes);
+		
+		
+		return ResponseEntity.ok().body(updateMesa);
+		
+	}
+	
+	/* Cambiar estado de mesa a Libre */
+	@PostMapping("/mesa/d/{id}")
+	public ResponseEntity<Mesa> updateEstadoMesaDisponible(@PathVariable(value="id") Long mesid){
+		
+		Mesa mes=mesaDAO.findOne(mesid);
+		if(mes==null) {
+			return ResponseEntity.notFound().build();
+		}
+				
+		mes.setEstado('D');
 		
 		Mesa updateMesa=mesaDAO.save(mes);
 		
@@ -149,26 +170,57 @@ public class MesaController {
 		
 	}
 	
-	/* Encontrar mesa por id  (CAMBIA EL ESTADO DE TODAS LAS MESAS QUE CUMPLEN ESE REQUISITO) SACAR EL BREAK*/ 
+	/* Listar todas las mesas libres para asginar (mesas virtuales)*/
+	@PersistenceUnit
+	EntityManagerFactory emf;
+	
+	@GetMapping("mesa/libres")
+	public List listMesasLibres() {
+        EntityManager em = emf.createEntityManager();
+        List arr_cust = em
+                .createQuery("SELECT m FROM Mesa m where m.estado = 'L' ")
+                .getResultList();
+        return arr_cust;
+
+	}
+	
+	/* Listar todas las mesas disponibles para asginar al cliente)*/
+	@PersistenceUnit
+	EntityManagerFactory emd;
+	
+	@GetMapping("mesa/disponibles")
+	public List listMesasDisponibles() {
+        EntityManager em = emd.createEntityManager();
+        List arr_cust = em
+                .createQuery("SELECT m FROM Mesa m where m.estado = 'D' ")
+                .getResultList();
+        return arr_cust;
+
+	}
+	
+	/* Buscar mesas disponibles cambiando el estado de estas a ocupada*/ 
 	
 	@GetMapping("/mesa/asignar/{cantidad}")
 	public ResponseEntity<Mesa> getMesaDisponible(@PathVariable(value="cantidad") Long cantidad){
 		
 		Mesa asignarMesa = null;
-		
+		int contador = 0;
 		
 		
 		for (Mesa mesa : mesaDAO.findAll()) {
 			
-			if(mesa.getCantidad_personas() >= cantidad && mesa.getEstado() =='L')
+			if(mesa.getCantidad_personas() >= cantidad && mesa.getEstado() =='D')
 			{
+				contador++;
+				
+			}if(contador == 1) {
 				mesa = mesaDAO.findOne(mesa.getId_mesa());
 				mesa.setEstado('O');
 				asignarMesa = mesaDAO.save(mesa);
-				
-
 			}
 		}
+		
+		
 			
 		
 		return ResponseEntity.ok().body(asignarMesa);
